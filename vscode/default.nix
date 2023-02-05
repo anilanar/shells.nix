@@ -25,7 +25,10 @@ let
     };
   };
 in {
-  imports = [ ./update-vscode-exts.nix ./vscode-config.nix ];
+  imports = [
+    # ./update-vscode-exts.nix 
+    ./vscode-config.nix
+  ];
 
   options.vscode = {
     settings = lib.mkOption {

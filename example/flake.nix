@@ -8,6 +8,6 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.systems.flakeExposed;
       imports = [ inputs.shells.flakeModule ];
-      perSystem = { pkgs, ... }: { packages = [ ]; };
+      perSystem = { pkgs, config, ... }: { config.shells.packages = [ ]; };
     };
 }
