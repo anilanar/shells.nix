@@ -61,11 +61,11 @@
     },
     "shells": {
       "locked": {
-        "lastModified": 1675625694,
-        "narHash": "sha256-ok7MJ+opnHnKlYmym9x6JoLt1dpsfxdp4/fEuXUlb3o=",
+        "lastModified": 1675625933,
+        "narHash": "sha256-LZtDfUgmLj3U2sTuyF1Ch0MNCmfl2Tdrp1JxlfI79ME=",
         "owner": "anilanar",
         "repo": "shells.nix",
-        "rev": "867131d2fc5a1c64ba493e7196f82d1d8eaa4244",
+        "rev": "c7a58b4d2432093b7f97f5477f47bfd064c4d53f",
         "type": "github"
       },
       "original": {

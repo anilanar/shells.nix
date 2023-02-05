@@ -1,10 +1,10 @@
-{ lib, pkgs, config, flake-parts-lib, ... }:
+{ lib, pkgs, flake-parts-lib, ... }:
 let types = lib.types;
 in {
-  # imports = [ ./vscode ];
+  imports = [ ./vscode ];
 
-  options = {
-    perSystem = flake-parts-lib.mkPerSystemOption ({ config, pkgs, ... }: {
+  options.perSystem = flake-parts-lib.mkPerSystemOption
+    ({ config, pkgs, ... }: {
       options.shells = lib.mkOption {
         type = types.submodule {
           options = {
@@ -18,18 +18,9 @@ in {
         };
         default = { };
       };
-
-      # shell = lib.mkOption {
-      #   type = types.package;
-      #   internal = true;
-      # };
     });
-  };
 
-  config = {
-    perSystem = { config, pkgs, ... }: {
-      devShell =
-        pkgs.mkShell { buildInputs = config.shells.packages ++ [ pkgs.lsof ]; };
-    };
+  config.perSystem = { config, pkgs, ... }: {
+    devShells.default = pkgs.mkShell { buildInputs = config.shells.packages; };
   };
 }

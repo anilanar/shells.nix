@@ -1,6 +1,7 @@
-{ lib, ... }:
+{ lib, flake-parts-lib, ... }:
 let
   types = lib.types;
+
   vscodeExtensionType = types.submodule {
     options = {
       name = lib.mkOption {
@@ -25,80 +26,85 @@ let
     };
   };
 in {
-  imports = [
-    # ./update-vscode-exts.nix 
-    ./vscode-config.nix
-  ];
+  imports = [ ./update-vscode-exts.nix ./vscode-config.nix ./vscode.nix ];
 
-  options.vscode = {
-    settings = lib.mkOption {
-      type = types.attrs;
-      example = {
-        editor.defaultFormatter = "esbenp.prettier-vscode";
-
-        editor.quickSuggestions = {
-          comments = "off";
-          strings = "off";
-        };
-
-        "[nix]" = { editor.defaultFormatter = "brettm12345.nixfmt-vscode"; };
-      };
-    };
-
-    keybindings = lib.mkOption {
-      type = types.listOf types.submodule {
+  options.perSystem = flake-parts-lib.mkPerSystemOption ({ ... }: {
+    options.vscode = lib.mkOption {
+      type = types.submodule {
         options = {
-          key = lib.mkOption {
-            type = types.str;
-            example = "ctrl+shift+d";
+          settings = lib.mkOption {
+            type = types.attrs;
+            example = {
+              "editor.defaultFormatter" = "esbenp.prettier-vscode";
+
+              "editor.quickSuggestions" = {
+                comments = "off";
+                strings = "off";
+              };
+
+              "[nix]" = {
+                "editor.defaultFormatter" = "brettm12345.nixfmt-vscode";
+              };
+            };
           };
-          command = lib.mkOption {
-            type = types.str;
-            example = "references-view.find";
+
+          keybindings = lib.mkOption {
+            type = types.listOf (types.submodule {
+              options = {
+                key = lib.mkOption {
+                  type = types.str;
+                  example = "ctrl+shift+d";
+                };
+                command = lib.mkOption {
+                  type = types.str;
+                  example = "references-view.find";
+                };
+                when = lib.mkOption {
+                  type = types.nullOr types.str;
+                  example = "editorHasReferenceProvider";
+                  default = null;
+                };
+              };
+            });
+            example = [
+              {
+                key = "ctrl+shift+d";
+                command = "-workbench.view.debug";
+              }
+              {
+                key = "ctrl+shift+d";
+                command = "references-view.find";
+                when = "editorHasReferenceProvider";
+              }
+              {
+                key = "ctrl+shift+x";
+                command = "-workbench.view.extensions";
+              }
+            ];
           };
-          when = lib.mkOption {
-            type = types.nullOr types.str;
-            example = "editorHasReferenceProvider";
-            default = null;
+
+          exts = lib.mkOption {
+            type = types.listOf vscodeExtensionType;
+            description =
+              "List of extensions. Can use `update-vscode-exts` script to get a list";
+            example = [
+              {
+                name = "Nix";
+                publisher = "bbenoist";
+                version = "1.0.1";
+                sha256 = "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b";
+              }
+              {
+                name = "vim";
+                publisher = "vscodevim";
+                version = "1.24.3";
+                sha256 = "02alixryryak80lmn4mxxf43izci5fk3pf3pcwy52nbd3d2fiwz1";
+              }
+            ];
+            default = [ ];
           };
         };
       };
-      example = [
-        {
-          key = "ctrl+shift+d";
-          command = "-workbench.view.debug";
-        }
-        {
-          key = "ctrl+shift+d";
-          command = "references-view.find";
-          when = "editorHasReferenceProvider";
-        }
-        {
-          key = "ctrl+shift+x";
-          command = "-workbench.view.extensions";
-        }
-      ];
     };
-
-    exts = lib.mkOption {
-      type = types.listOf vscodeExtensionType;
-      description =
-        "List of extensions. Can use `update-vscode-exts` script to get a list";
-      example = [
-        {
-          name = "Nix";
-          publisher = "bbenoist";
-          version = "1.0.1";
-          sha256 = "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b";
-        }
-        {
-          name = "vim";
-          publisher = "vscodevim";
-          version = "1.24.3";
-          sha256 = "02alixryryak80lmn4mxxf43izci5fk3pf3pcwy52nbd3d2fiwz1";
-        }
-      ];
-      default = [ ];
-    };
-  };
+  });
 }
