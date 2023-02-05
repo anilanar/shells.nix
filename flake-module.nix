@@ -28,7 +28,7 @@ in {
 
   config = {
     perSystem = { config, pkgs, ... }: {
-      devShells.default =
+      devShell =
         pkgs.mkShell { buildInputs = config.shells.packages ++ [ pkgs.lsof ]; };
     };
   };
