@@ -1,7 +1,7 @@
 { lib, pkgs, config, flake-parts-lib, ... }:
 let types = lib.types;
 in {
-  imports = [ ./vscode ];
+  # imports = [ ./vscode ];
 
   options = {
     perSystem = flake-parts-lib.mkPerSystemOption ({ config, pkgs, ... }: {
