@@ -1,0 +1,25 @@
+{ lib, pkgs, config, flake-parts-lib, ... }:
+let types = lib.types;
+in {
+  imports = [ ./vscode ];
+
+  options.perSystem = flake-parts-lib.mkPerSystemOption
+    ({ config, pkgs, ... }: {
+      packages = lib.mkOption {
+        type = types.listOf types.package;
+        description =
+          "A list of packages to expose inside the developer environment. Search available packages using ``devenv search NAME``.";
+        default = [ ];
+      };
+
+      shell = lib.mkOption {
+        type = types.package;
+        internal = true;
+      };
+    });
+
+  config.perSystem = { config, pkgs, ... }: {
+    devShells.default =
+      pkgs.mkShell { buildInputs = config.packages ++ [ pkgs.lsof ]; };
+  };
+}
