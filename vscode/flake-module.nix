@@ -1,30 +1,5 @@
 { lib, flake-parts-lib, inputs, ... }:
-let
-  types = lib.types;
-
-  vscodeExtensionType = types.submodule {
-    options = {
-      name = lib.mkOption {
-        type = types.str;
-        description = "Extension name. For foo.bar, name is bar.";
-        example = "vim";
-      };
-      publisher = lib.mkOption {
-        type = types.str;
-        description = "Extension publisher. For foo.bar, publisher is foo.";
-        example = "vscodevim";
-      };
-      version = lib.mkOption {
-        type = types.str;
-        description = "Version as declared in vscode marketplace.";
-        example = "1.0.0";
-      };
-      sha256 = lib.mkOption {
-        type = types.str;
-        example = "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b";
-      };
-    };
-  };
+let types = lib.types;
 in {
   imports = [ ./update-vscode-exts.nix ./config.nix ];
 
@@ -84,23 +59,9 @@ in {
           };
 
           exts = lib.mkOption {
-            type = types.listOf vscodeExtensionType;
+            type = types.listOf types.package;
             description =
-              "List of extensions. Can use `update-vscode-exts` script to get a list";
-            example = [
-              {
-                name = "Nix";
-                publisher = "bbenoist";
-                version = "1.0.1";
-                sha256 = "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b";
-              }
-              {
-                name = "vim";
-                publisher = "vscodevim";
-                version = "1.24.3";
-                sha256 = "02alixryryak80lmn4mxxf43izci5fk3pf3pcwy52nbd3d2fiwz1";
-              }
-            ];
+              "List of extensions. See https://github.com/nix-community/nix-vscode-extensions";
             default = [ ];
           };
         };
@@ -114,13 +75,5 @@ in {
         inherit pkgs;
         inherit (inputs'.vscode-extensions) extensions;
       };
-    in {
-      config.shells.packages = [
-        (mkVscode {
-          settings = config.vscode.settings;
-          keybindings = config.vscode.settings;
-          exts = config.vscode.exts;
-        })
-      ];
-    };
+    in { config.shells.packages = [ (mkVscode config.vscode) ]; };
 }

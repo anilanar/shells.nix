@@ -1,5 +1,5 @@
 { pkgs, extensions, ... }:
-{ settings, keybindings, exts }:
+{ settings, keybindings, exts, ... }:
 let
   settings-file =
     pkgs.writeText "vscode-user-settings" (builtins.toJSON settings);

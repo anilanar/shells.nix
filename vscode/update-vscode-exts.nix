@@ -11,10 +11,5 @@
           cp ${inputs.nixpkgs}/pkgs/applications/editors/vscode/extensions/update_installed_exts.sh $out/bin/update-vscode-exts
         '';
       });
-    in {
-      config.shells.packages = [
-        update-vscode-exts
-
-      ];
-    };
+    in { config.shells.packages = [ update-vscode-exts ]; };
 }

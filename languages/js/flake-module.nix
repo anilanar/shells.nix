@@ -30,14 +30,7 @@
           [ ]));
 
       vscode.exts = with inputs'.vscode-extensions.extensions;
-        [
-          # (builtins.trace "huh ${inputs'.vscode-extensions.extensions.esbenp.prettier-vscode}"
-          #   inputs'.vscode-extensions.extensions.esbenp.prettier-vscode)
-
-          # esbenp.prettier-vscode
-          dbaeumer.vscode-eslint 
-
-        ];
+        [ dbaeumer.vscode-eslint ];
     };
 }
 

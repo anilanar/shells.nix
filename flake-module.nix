@@ -1,7 +1,7 @@
 { lib, pkgs, flake-parts-lib, ... }:
 let types = lib.types;
 in {
-  imports = [ ./vscode/flake-module.nix ./languages/js/flake-module.nix ];
+  imports = [ ./languages/js/flake-module.nix ./vscode/flake-module.nix ];
 
   options.perSystem = flake-parts-lib.mkPerSystemOption
     ({ config, pkgs, ... }: {
