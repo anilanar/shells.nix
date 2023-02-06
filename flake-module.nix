@@ -1,7 +1,7 @@
 { lib, pkgs, flake-parts-lib, ... }:
 let types = lib.types;
 in {
-  imports = [ ./vscode ];
+  imports = [ ./vscode/flake-module.nix ./languages/js/flake-module.nix ];
 
   options.perSystem = flake-parts-lib.mkPerSystemOption
     ({ config, pkgs, ... }: {
@@ -23,4 +23,9 @@ in {
   config.perSystem = { config, pkgs, ... }: {
     devShells.default = pkgs.mkShell { buildInputs = config.shells.packages; };
   };
+
+  config.perInput = system: flake:
+    lib.optionalAttrs (flake ? extensions.${system}.vscode-marketplace) {
+      extensions = flake.extensions.${system}.vscode-marketplace;
+    };
 }
