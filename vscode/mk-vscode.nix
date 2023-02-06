@@ -1,5 +1,5 @@
 { pkgs, extensions, ... }:
-{ settings, keybindings, exts, ... }:
+{ settings, keybindings, exts, exts', ... }:
 let
   settings-file =
     pkgs.writeText "vscode-user-settings" (builtins.toJSON settings);
@@ -15,7 +15,7 @@ let
         brettm12345.nixfmt-vscode
         editorconfig.editorconfig
         esbenp.prettier-vscode
-      ] ++ exts;
+      ] ++ (exts extensions) ++ exts';
   };
   bin = pkgs.writeScriptBin "code" ''
     hash=$(nix hash path --base32 ${vscode})

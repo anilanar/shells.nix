@@ -3,7 +3,7 @@
     (let types = lib.types;
     in { options.js = { enable = lib.mkEnableOption "js shell"; }; }));
 
-  config.perSystem = { config, lib, pkgs, system, inputs', ... }: {
+  config.perSystem = { config, lib, pkgs, ... }: {
     shells.packages = lib.mkIf config.js.enable (with pkgs; [
       nodejs-18_x
       nodePackages.pnpm
@@ -13,8 +13,6 @@
       watchman
     ]);
 
-    vscode.exts = with inputs'.vscode-extensions.extensions;
-      [ dbaeumer.vscode-eslint ];
+    vscode.exts = exts: with exts; [ dbaeumer.vscode-eslint ];
   };
 }
-

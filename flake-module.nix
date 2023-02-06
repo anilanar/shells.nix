@@ -3,6 +3,7 @@ let types = lib.types;
 in {
   imports = [
     ./languages/js.nix
+    ./languages/rust.nix
     ./vscode
     ./cypress.nix
     ./turborepo.nix

@@ -57,9 +57,15 @@ in {
       };
 
       exts = lib.mkOption {
-        type = types.listOf types.package;
+        type = types.functionTo (types.listOf types.package);
         description =
-          "List of extensions. See https://github.com/nix-community/nix-vscode-extensions";
+          "List of extensions from the marketplace. See https://github.com/nix-community/nix-vscode-extensions";
+        default = _: [ ];
+      };
+
+      exts' = lib.mkOption {
+        type = types.listOf types.package;
+        description = "List of extensions.";
         default = [ ];
       };
     };

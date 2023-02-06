@@ -19,13 +19,14 @@
       };
 
       perSystem = { config, pkgs, ... }: {
-        config.shells.env = {
-          FOO = "BAR";
-          BAR = "1";
+        config = {
+          shells.packages = [ ];
+          shells.env = { FOO = "BAR"; };
+          js.enable = false;
+          rust.enable = false;
+          cypress.enable = false;
+          turborepo.enable = false;
         };
-        config.js.enable = true;
-        config.cypress.enable = false;
-        config.turborepo.enable = true;
       };
     });
 }
