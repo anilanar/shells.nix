@@ -19,10 +19,13 @@
       };
 
       perSystem = { config, pkgs, ... }: {
-        config.shells.js = {
-          enable = true;
-          cypress = false;
+        config.shells.env = {
+          FOO = "BAR";
+          BAR = "1";
         };
+        config.js.enable = true;
+        config.cypress.enable = false;
+        config.turborepo.enable = true;
       };
     });
 }
