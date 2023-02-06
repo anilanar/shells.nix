@@ -30,7 +30,7 @@ in {
     devShells.default = pkgs.mkShell {
       buildInputs = config.shells.packages;
       shellHook = builtins.concatStringsSep "\n"
-        (lib.attrsets.mapAttrsToList (name: value: "${name}=${value}")
+        (lib.attrsets.mapAttrsToList (name: value: "export ${name}=${value}")
           config.shells.env);
     };
   };
