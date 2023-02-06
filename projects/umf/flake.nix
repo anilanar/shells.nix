@@ -11,12 +11,8 @@
       imports = [ shells.flakeModule ];
       perSystem = { pkgs, ... }: {
         config = {
-          shells.packages = [ ];
-          shells.env = { FOO = "BAR"; };
-          js.enable = false;
-          rust.enable = false;
-          cypress.enable = false;
-          turborepo.enable = false;
+          js.enable = true;
+          cypress.enable = true;
         };
       };
     };
