@@ -1,15 +1,19 @@
-{ config, inputs, ... }: {
-  config.perSystem = { config, pkgs, ... }:
-    let
-      update-vscode-exts = (pkgs.stdenv.mkDerivation {
-        name = "update-vscode-exts";
+{ config, pkgs, inputs, ... }:
+let
+  pkg = pkgs.stdenv.mkDerivation {
+    name = "update-vscode-exts";
 
-        unpackPhase = "true";
+    buildCommand = ''
+      install -Dm755 $script $out/bin/update-vscode-exts
+    '';
 
-        installPhase = ''
-          mkdir -p $out/bin
-          cp ${inputs.nixpkgs}/pkgs/applications/editors/vscode/extensions/update_installed_exts.sh $out/bin/update-vscode-exts
-        '';
-      });
-    in { config.shells.packages = [ update-vscode-exts ]; };
-}
+    script = pkgs.substituteAll {
+      src = ./update-vscode-exts.sh;
+      isExecutable = true;
+      bash = "${pkgs.bash}/bin/sh";
+      jq = "${pkgs.jq}/bin/jq";
+      curl = "${pkgs.curl}/bin/curl";
+      unzip = "${pkgs.unzip}/bin/unzip";
+    };
+  };
+in { config = { packages = [ pkg ]; }; }
