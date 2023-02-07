@@ -58,16 +58,13 @@ let
         maintainers = with maintainers; [ tweber mmahut Crafter ];
       };
     };
-in { config, lib, flake-parts-lib, ... }: {
-  options.perSystem = flake-parts-lib.mkPerSystemOption ({ lib, ... }: {
-    options.cypress = { enable = lib.mkEnableOption "cypress binary"; };
-  });
+in { config, lib, system, pkgs, ... }: {
+  options = { cypress = { enable = lib.mkEnableOption "cypress binary"; }; };
 
-  config.perSystem = { config, lib, system, pkgs, ... }:
-    let cypress = mkCypress pkgs;
-    in lib.mkIf (config.cypress.enable && system == "x86_64-linux") {
-      shells.packages = [ cypress ];
-      shells.env = { CYPRESS_RUN_BINARY = "${cypress}/bin/Cypress"; };
-    };
+  config = let cypress = mkCypress pkgs;
+  in lib.mkIf (config.cypress.enable && system == "x86_64-linux") {
+    packages = [ cypress ];
+    env = { CYPRESS_RUN_BINARY = "${cypress}/bin/Cypress"; };
+  };
 }
 

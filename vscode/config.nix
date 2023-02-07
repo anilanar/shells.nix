@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
-  config.perSystem = { config, ... }: {
-    config.vscode = {
+  config = {
+    vscode = {
       settings = {
         emmet.excludeLanguages = [ "javascriptreact" "typescriptreact" ];
         editor.suggestOnTriggerCharacters = false;

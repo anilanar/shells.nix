@@ -1,23 +1,26 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     shells.url = "github:anilanar/shells.nix";
   };
-  outputs = inputs@{ self, nixpkgs, flake-parts, shells, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = nixpkgs.lib.systems.flakeExposed;
-      imports = [ shells.flakeModule ];
-      perSystem = { pkgs, ... }: {
-        config = mkShell {
-          shells.packages = [ ];
-          shells.env = { FOO = "BAR"; };
-          js.enable = false;
-          rust.enable = false;
-          cypress.enable = false;
-          turborepo.enable = false;
+  outputs = inputs@{ self, nixpkgs, flake-utils-plus, shells, ... }:
+    flake-utils-plus.lib.mkFlake {
+      inherit self inputs;
+      outputsBuilder = channels:
+        let
+          pkgs = channels.nixpkgs;
+          unstable = channels.unstable;
+        in {
+          devShell = shells.lib.mkShell { inherit inputs; } {
+            shells.packages = [ ];
+            shells.env = { FOO = "BAR"; };
+            js.enable = false;
+            rust.enable = false;
+            cypress.enable = false;
+            turborepo.enable = false;
+          };
         };
-      };
     };
 }

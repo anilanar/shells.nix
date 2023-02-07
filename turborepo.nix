@@ -23,16 +23,15 @@ let
 
       doCheck = false;
     };
-in { config, lib, flake-parts-lib, ... }: {
-  options.perSystem = flake-parts-lib.mkPerSystemOption ({ lib, ... }: {
-    options.turborepo = { enable = lib.mkEnableOption "turborepo binary"; };
-  });
+in { config, lib, pkgs, ... }: {
+  options = {
+    turborepo = { enable = lib.mkEnableOption "turborepo binary"; };
+  };
 
-  config.perSystem = { config, lib, system, pkgs, ... }:
-    let turborepo = mkTurborepo pkgs;
-    in lib.mkIf (config.turborepo.enable) {
-      shells.packages = [ turborepo ];
-      shells.env = { TURBO_BINARY_PATH = "${turborepo}/bin/turbo"; };
-    };
+  config = let turborepo = mkTurborepo pkgs;
+  in lib.mkIf (config.turborepo.enable) {
+    packages = [ turborepo ];
+    env = { TURBO_BINARY_PATH = "${turborepo}/bin/turbo"; };
+  };
 }
 

@@ -1,10 +1,8 @@
-{ lib, flake-parts-lib, inputs, ... }:
-let types = lib.types;
-in {
+{ config, lib, pkgs, types, extensions, ... }: {
   imports = [ ./update-vscode-exts.nix ./config.nix ];
 
-  options.perSystem = flake-parts-lib.mkPerSystemOption ({ ... }: {
-    options.vscode = {
+  options = {
+    vscode = {
       settings = lib.mkOption {
         type = types.attrs;
         example = {
@@ -69,13 +67,11 @@ in {
         default = [ ];
       };
     };
-  });
+  };
 
-  config.perSystem = { config, pkgs, system, inputs', ... }:
-    let
-      mkVscode = import ./mk-vscode.nix {
-        inherit pkgs;
-        inherit (inputs'.vscode-extensions) extensions;
-      };
-    in { config.shells.packages = [ (mkVscode config.vscode) ]; };
+  config = {
+    packages =
+      let mkVscode = import ./mk-vscode.nix { inherit pkgs extensions; };
+      in [ (mkVscode config.vscode) ];
+  };
 }
