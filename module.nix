@@ -1,10 +1,10 @@
 { config, lib, pkgs, types, ... }: {
   imports = [
-    ./vscode
+    ./features/vscode
+    ./features/cypress.nix
+    ./features/turborepo.nix
     ./languages/js.nix
     ./languages/rust.nix
-    ./cypress.nix
-    ./turborepo.nix
   ];
 
   options = {

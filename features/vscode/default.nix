@@ -3,6 +3,7 @@
 
   options = {
     vscode = {
+      enable = lib.mkEnableOption "vscode";
       settings = lib.mkOption {
         type = types.attrs;
         example = {
@@ -69,7 +70,7 @@
     };
   };
 
-  config = {
+  config = lib.mkIf (config.vscode.enable) {
     packages =
       let mkVscode = import ./mk-vscode.nix { inherit pkgs extensions; };
       in [ (mkVscode config.vscode) ];

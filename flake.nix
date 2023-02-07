@@ -9,13 +9,13 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        mkShell = import ./mkShell.nix {
-          inherit pkgs inputs system;
-          extensions =
-            vscode-extensions.extensions.${system}.vscode-marketplace;
-        };
+        extensions = vscode-extensions.extensions.${system}.vscode-marketplace;
+        mkShell = args:
+          (import ./lib/mkShell.nix) { inherit pkgs inputs system extensions; }
+          (args // { modules = [ ./module.nix ] ++ args.modules; });
       in {
-        devShells.default = mkShell { modules = [ ]; };
+        lib = { inherit mkShell; };
+        devShells.default = mkShell { modules = [{ vscode.enable = true; }]; };
         devShells.umf = mkShell { modules = [ ./projects/umf.nix ]; };
       });
 }
