@@ -13,15 +13,18 @@
         mkShell = args:
           (import ./lib/mkShell.nix) { inherit pkgs inputs system extensions; }
           (args // { modules = [ ./module.nix ] ++ args.modules; });
+        mkVscode = import ./features/vscode/mk-vscode.nix {
+          inherit pkgs extensions;
+          inherit (pkgs) lib;
+        };
+        vscode = mkVscode { };
       in {
         lib = { inherit mkShell; };
         devShells.default = mkShell { modules = [{ vscode.enable = true; }]; };
         devShells.umf = mkShell { modules = [ ./projects/umf.nix ]; };
-      })
-   // {
-     templates.default = {
-       path = ./example;
-     };
-   };
+        packages.vscode = vscode;
+      }) // {
+        templates.default = { path = ./example; };
+      };
 }
 

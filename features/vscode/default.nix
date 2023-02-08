@@ -1,5 +1,5 @@
 { config, lib, pkgs, types, extensions, ... }: {
-  imports = [ ./update-vscode-exts.nix ./config.nix ];
+  imports = [ ./update-vscode-exts.nix ];
 
   options = {
     vscode = {
@@ -18,6 +18,7 @@
             "editor.defaultFormatter" = "brettm12345.nixfmt-vscode";
           };
         };
+        default = { };
       };
 
       keybindings = lib.mkOption {
@@ -53,6 +54,7 @@
             command = "-workbench.view.extensions";
           }
         ];
+        default = [ ];
       };
 
       exts = lib.mkOption {
@@ -72,7 +74,7 @@
 
   config = lib.mkIf (config.vscode.enable) {
     packages =
-      let mkVscode = import ./mk-vscode.nix { inherit pkgs extensions; };
+      let mkVscode = import ./mk-vscode.nix { inherit pkgs lib extensions; };
       in [ (mkVscode config.vscode) ];
   };
 }

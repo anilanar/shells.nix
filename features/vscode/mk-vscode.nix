@@ -1,10 +1,13 @@
-{ pkgs, extensions, ... }:
-{ settings, keybindings, exts, exts', ... }:
+{ pkgs, lib, extensions, ... }:
+{ settings ? { }, keybindings ? [ ], exts ? _: [ ], exts' ? [ ], ... }:
 let
+  config = import ./config.nix { inherit pkgs; };
+  all-settings = lib.recursiveUpdate config.settings settings;
+  all-keybindings = config.keybindings ++ keybindings;
   settings-file =
-    pkgs.writeText "vscode-user-settings" (builtins.toJSON settings);
+    pkgs.writeText "vscode-user-settings" (builtins.toJSON all-settings);
   keybindings-file =
-    pkgs.writeText "vscode-user-keybindings" (builtins.toJSON keybindings);
+    pkgs.writeText "vscode-user-keybindings" (builtins.toJSON all-keybindings);
   vscode = pkgs.vscode-with-extensions.override {
     vscode = pkgs.vscodium;
     vscodeExtensions = with extensions;
