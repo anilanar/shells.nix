@@ -1,13 +1,6 @@
-{ pkgs, extensions, inputs, system, ... }:
+args@{ pkgs, ... }:
 { modules, ... }:
 let
-  eval = pkgs.lib.evalModules {
-    modules = [{
-      _module.args = {
-        inherit pkgs inputs extensions system;
-        inherit (pkgs) lib;
-        inherit (pkgs.lib) types;
-      };
-    }] ++ modules;
-  };
+  eval =
+    pkgs.lib.evalModules { modules = [{ _module.args = args; }] ++ modules; };
 in eval.config.shell

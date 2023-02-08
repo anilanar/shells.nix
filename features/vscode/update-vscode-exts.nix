@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 let
   pkg = pkgs.stdenv.mkDerivation {
     name = "update-vscode-exts";

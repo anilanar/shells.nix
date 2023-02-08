@@ -1,8 +1,8 @@
-{ config, lib, types, pkgs, ... }: {
+{ config, lib, types, pkgs, fenix, ... }: {
   options = { rust = { enable = lib.mkEnableOption "rust shell"; }; };
 
   config = lib.mkIf config.rust.enable {
-    packages = with pkgs; [ rustc cargo rustfmt openssl rustup ];
+    packages = [ fenix.default.toolchain pkgs.rust-analyzer-nightly ];
 
     env = {
       OPENSSL_DIR = "${pkgs.openssl.dev}";
@@ -10,6 +10,6 @@
       RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     };
 
-    vscode.exts = exts: with exts; [ rust-lang.rust-analyzer ];
+    vscode.exts' = [ pkgs.vscode-extensions.rust-lang.rust-analyzer-nightly ];
   };
 }
