@@ -1,9 +1,8 @@
 { config, lib, types, pkgs, ... }: {
   options = { rust = { enable = lib.mkEnableOption "rust shell"; }; };
 
-  config = {
-    packages = lib.mkIf config.js.enable
-      (with pkgs; [ rustc cargo rustfmt openssl rustup ]);
+  config = lib.mkIf config.rust.enable {
+    packages = with pkgs; [ rustc cargo rustfmt openssl rustup ];
 
     env = {
       OPENSSL_DIR = "${pkgs.openssl.dev}";
