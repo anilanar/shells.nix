@@ -17,6 +17,11 @@
         lib = { inherit mkShell; };
         devShells.default = mkShell { modules = [{ vscode.enable = true; }]; };
         devShells.umf = mkShell { modules = [ ./projects/umf.nix ]; };
-      });
+      })
+   // {
+     templates.default = {
+       path = ./example;
+     };
+   };
 }
 
