@@ -1,15 +1,15 @@
-{ config, lib, types, pkgs, ... }: {
+{ config, lib, types, pkgs, fenix, ... }: {
   options = { rust = { enable = lib.mkEnableOption "rust shell"; }; };
 
   config = lib.mkIf config.rust.enable {
-    packages = with pkgs; [ rustc cargo rustfmt openssl rustup ];
+    packages = with fenix; [ cargo rustc rustfmt rust-analyzer ];
 
     env = {
       OPENSSL_DIR = "${pkgs.openssl.dev}";
       OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
-      RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+      RUST_SRC_PATH = "${fenix.rust-src}/lib/rustlib/src/rust/library";
     };
 
-    vscode.exts = exts: with exts; [ rust-lang.rust-analyzer ];
+    vscode.exts' = [ fenix.rust-analyzer-vscode-extension ];
   };
 }
