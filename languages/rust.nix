@@ -13,7 +13,7 @@
     vscode.exts' = [ fenix.rust-analyzer-vscode-extension ];
 
     vscode.settings = {
-      "[rust]" = { editor.defaultFormatter = "matklad.rust-analyzer"; };
+      "[rust]" = { editor.defaultFormatter = "rust-lang.rust-analyzer"; };
     };
   };
 }
