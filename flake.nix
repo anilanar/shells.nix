@@ -35,6 +35,7 @@
           modules = [{
             vscode.enable = true;
             rust.enable = true;
+            cypress.enable = true;
           }];
         };
         devShells.umf = mkShell { modules = [ ./projects/umf.nix ]; };

@@ -1,14 +1,15 @@
 let
   mkCypress = { alsa-lib, autoPatchelfHook, callPackage, fetchzip, gtk2, gtk3
-    , lib, mesa, nss, stdenv, udev, unzip, wrapGAppsHook, xorg, ... }:
+    , lib, mesa, nss, stdenv, udev, unzip, wrapGAppsHook, xorg }:
 
     stdenv.mkDerivation rec {
       pname = "cypress";
-      version = "12.3.0";
+      version = "12.5.1";
 
       src = fetchzip {
-        url = "https://cdn.cypress.io/desktop/${version}/linux-x64/cypress.zip";
-        sha256 = "sha256-RhPH/MBF8lqXeFEm2sd73Z55jgcl45VsmRWtAhckrP0=";
+        url =
+          "https://download.cypress.io/desktop/${version}?platform=linux&arch=x64#cypress.zip";
+        sha256 = "sha256-rdMlaCjUXvV05hbmoyFtTOUdZGWyFCQnTvkRIUH3myM=";
       };
 
       # don't remove runtime deps
@@ -58,11 +59,11 @@ let
         maintainers = with maintainers; [ tweber mmahut Crafter ];
       };
     };
-in { config, lib, system, pkgs, ... }: {
+in { config, lib, pkgs, ... }: {
   options = { cypress = { enable = lib.mkEnableOption "cypress binary"; }; };
 
-  config = let cypress = mkCypress pkgs;
-  in lib.mkIf (config.cypress.enable && system == "x86_64-linux") {
+  config = let cypress = pkgs.callPackage mkCypress { };
+  in lib.mkIf (config.cypress.enable) {
     packages = [ cypress ];
     env = { CYPRESS_RUN_BINARY = "${cypress}/bin/Cypress"; };
   };
