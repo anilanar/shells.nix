@@ -31,13 +31,7 @@
         vscode = mkVscode { };
       in {
         lib = { inherit mkShell; };
-        devShells.default = mkShell {
-          modules = [{
-            vscode.enable = true;
-            rust.enable = true;
-            cypress.enable = true;
-          }];
-        };
+        devShells.default = mkShell { modules = [{ vscode.enable = true; }]; };
         devShells.umf = mkShell { modules = [ ./projects/umf.nix ]; };
         packages.vscode = vscode;
       }) // {
