@@ -10,7 +10,12 @@
       RUST_SRC_PATH = "${fenix.rust-src}/lib/rustlib/src/rust/library";
     };
 
-    vscode.exts' = [ fenix.rust-analyzer-vscode-extension ];
+    vscode.exts = exts:
+      with exts; [
+        fenix.rust-analyzer-vscode-extension
+        serayuzgur.crates
+        bungcip.better-toml
+      ];
 
     vscode.settings = {
       "[rust]" = { editor.defaultFormatter = "rust-lang.rust-analyzer"; };
