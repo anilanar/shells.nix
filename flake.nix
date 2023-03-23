@@ -11,11 +11,7 @@
       let
         pkgs = import inputs.nixpkgs {
           inherit system;
-          config = {
-            allowUnfreePredicate = pkg:
-              (builtins.substring 0 32 pkg.name)
-              == "vscode-extension-github-copilot-";
-          };
+          config = { allowUnfree = true; };
         };
         fenix = {
           inherit (inputs.fenix.packages.${system}.complete)

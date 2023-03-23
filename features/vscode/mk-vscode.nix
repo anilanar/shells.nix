@@ -9,7 +9,7 @@ let
   keybindings-file =
     pkgs.writeText "vscode-user-keybindings" (builtins.toJSON all-keybindings);
   vscode = pkgs.vscode-with-extensions.override {
-    vscode = pkgs.vscodium;
+    vscode = pkgs.vscode;
     vscodeExtensions = with extensions;
       [
         vscodevim.vim
@@ -28,6 +28,6 @@ let
     ln -sfn ${settings-file} $tmpdir/User/settings.json
     ln -sfn ${keybindings-file} $tmpdir/User/keybindings.json
 
-    exec "${vscode}/bin/codium" --user-data-dir $tmpdir "$@"
+    exec "${vscode}/bin/code" --user-data-dir $tmpdir "$@"
   '';
 in bin
