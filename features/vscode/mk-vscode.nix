@@ -18,6 +18,7 @@ let
         brettm12345.nixfmt-vscode
         editorconfig.editorconfig
         esbenp.prettier-vscode
+        github.copilot
       ] ++ (exts extensions) ++ exts';
   };
   bin = pkgs.writeScriptBin "code" ''
