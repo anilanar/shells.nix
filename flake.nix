@@ -3,14 +3,20 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     fenix = { url = "github:nix-community/fenix"; };
     flake-utils.url = "github:numtide/flake-utils";
-    vscode-extensions.url =
-      "github:nix-community/nix-vscode-extensions/e4b75f0f77a31f42deef94bfbc10c4a48a11717f";
+    vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
   description = "A library for creating personal devenvs";
   outputs = inputs@{ nixpkgs, flake-utils, vscode-extensions, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import inputs.nixpkgs { inherit system; };
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config = {
+            allowUnfreePredicate = pkg:
+              (builtins.substring 0 32 pkg.name)
+              == "vscode-extension-github-copilot-";
+          };
+        };
         fenix = {
           inherit (inputs.fenix.packages.${system}.complete)
             cargo rustc rustfmt rust-src;
