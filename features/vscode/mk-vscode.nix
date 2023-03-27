@@ -18,7 +18,9 @@ let
         brettm12345.nixfmt-vscode
         editorconfig.editorconfig
         esbenp.prettier-vscode
+        ms-vsliveshare.vsliveshare
         pkgs.vscode-extensions.github.copilot
+
       ] ++ (exts extensions) ++ exts';
   };
   bin = pkgs.writeScriptBin "code" ''
