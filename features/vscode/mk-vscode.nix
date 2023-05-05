@@ -21,7 +21,7 @@ let
         ms-vsliveshare.vsliveshare
         pkgs.vscode-extensions.github.copilot
         ms-vscode-remote.remote-ssh
-        ms-vscode-remote.remote-server
+        ms-vscode.remote-server
 
       ] ++ (exts extensions) ++ exts';
   };
