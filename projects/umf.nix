@@ -2,6 +2,7 @@
   config = {
     js.enable = true;
     cypress.enable = system == "x86_64-linux";
+    turborepo.enable = true;
     vscode = {
       enable = true;
       exts = _:
