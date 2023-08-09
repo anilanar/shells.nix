@@ -124,7 +124,8 @@
         "fenix": "fenix",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs_2",
-        "vscode-extensions": "vscode-extensions"
+        "vscode-extensions": "vscode-extensions",
+        "vscode-gpu-workaround": "vscode-gpu-workaround"
       }
     },
     "rust-analyzer-src": {
@@ -191,6 +192,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
+        "type": "github"
+      }
+    },
+    "vscode-gpu-workaround": {
+      "locked": {
+        "lastModified": 1690578908,
+        "narHash": "sha256-LENpgk9UV8dGVBTnO73DdGMBPdtd6ERISHdiHHQwEHM=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e8d56b900b2fb1d2237b5511d8a6e1d544943744",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e8d56b900b2fb1d2237b5511d8a6e1d544943744",
         "type": "github"
       }
     }
