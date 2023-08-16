@@ -19,7 +19,7 @@ let
         editorconfig.editorconfig
         esbenp.prettier-vscode
         ms-vsliveshare.vsliveshare
-        pkgs.vscode-extensions.github.copilot
+        github.copilot
         ms-vscode-remote.remote-ssh
         ms-vscode.remote-server
 
