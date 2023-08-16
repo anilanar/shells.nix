@@ -2,6 +2,7 @@
   imports = [
     ./features/vscode
     ./features/cypress.nix
+    ./features/playwright.nix
     ./features/turborepo.nix
     ./languages/js.nix
     ./languages/rust.nix

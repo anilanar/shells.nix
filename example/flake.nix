@@ -14,6 +14,7 @@
           js.enable = false;
           rust.enable = false;
           cypress.enable = false;
+          playwright.enable = false;
           turborepo.enable = false;
         }];
       };
