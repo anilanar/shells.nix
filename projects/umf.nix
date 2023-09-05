@@ -5,7 +5,7 @@
     playwright.enable = system == "x86_64-linux";
     turborepo.enable = true;
     vscode = {
-      enable = true;
+      enable = false;
       exts = _:
         [
           (pkgs.vscode-utils.extensionFromVscodeMarketplace {
