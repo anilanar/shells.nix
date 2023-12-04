@@ -4,8 +4,8 @@
       enable = lib.mkEnableOption "js shell";
       nodejs = lib.mkOption {
         type = types.package;
-        default = pkgs.nodejs-20_x;
-        defaultText = lib.literalExpression "pkgs.nodejs-18_x";
+        default = pkgs.nodejs_20;
+        defaultText = lib.literalExpression "pkgs.nodejs_20";
         description = lib.mdDoc "Nodejs package to use.";
       };
     };
