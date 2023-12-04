@@ -3,7 +3,7 @@
     js.enable = true;
     cypress.enable = system == "x86_64-linux";
     playwright.enable = system == "x86_64-linux";
-    turborepo.enable = true;
+    turborepo.enable = false;
     vscode = {
       enable = false;
       exts = _:
