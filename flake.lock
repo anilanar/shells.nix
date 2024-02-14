@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "cypress-13-6": {
+      "locked": {
+        "lastModified": 1706827676,
+        "narHash": "sha256-tunaTWsqAb1UHFWih5ULYAdhCnUyngjnZmP5bGNaSKw=",
+        "owner": "r-ryantm",
+        "repo": "nixpkgs",
+        "rev": "8790ae9a0340982d4fca460fe0ca21409a9809ed",
+        "type": "github"
+      },
+      "original": {
+        "owner": "r-ryantm",
+        "ref": "auto-update/cypress",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": "nixpkgs",
@@ -121,11 +137,11 @@
     },
     "root": {
       "inputs": {
+        "cypress-13-6": "cypress-13-6",
         "fenix": "fenix",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs_2",
-        "vscode-extensions": "vscode-extensions",
-        "vscode-gpu-workaround": "vscode-gpu-workaround"
+        "vscode-extensions": "vscode-extensions"
       }
     },
     "rust-analyzer-src": {
@@ -192,22 +208,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "type": "github"
-      }
-    },
-    "vscode-gpu-workaround": {
-      "locked": {
-        "lastModified": 1690578908,
-        "narHash": "sha256-LENpgk9UV8dGVBTnO73DdGMBPdtd6ERISHdiHHQwEHM=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e8d56b900b2fb1d2237b5511d8a6e1d544943744",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e8d56b900b2fb1d2237b5511d8a6e1d544943744",
         "type": "github"
       }
     }

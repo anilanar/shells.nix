@@ -4,11 +4,11 @@
     fenix = { url = "github:nix-community/fenix"; };
     flake-utils.url = "github:numtide/flake-utils";
     vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-    vscode-gpu-workaround.url =
-      "github:nixos/nixpkgs/e8d56b900b2fb1d2237b5511d8a6e1d544943744";
+    cypress-13-6.url = "github:r-ryantm/nixpkgs/auto-update/cypress";
   };
   description = "A library for creating personal devenvs";
-  outputs = inputs@{ nixpkgs, flake-utils, vscode-extensions, ... }:
+  outputs =
+    inputs@{ nixpkgs, flake-utils, vscode-extensions, cypress-13-6, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import inputs.nixpkgs {
@@ -16,10 +16,10 @@
           config = { allowUnfree = true; };
           overlays = [
             (final: prev: {
-              vscode = (import inputs.vscode-gpu-workaround {
+              cypress = (import cypress-13-6 {
                 inherit system;
                 config = { allowUnfree = true; };
-              }).vscode;
+              }).cypress;
             })
           ];
         };
