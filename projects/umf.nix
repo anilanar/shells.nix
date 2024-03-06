@@ -1,5 +1,6 @@
 { pkgs, system, ... }: {
   config = {
+    packages = with pkgs; [ teleport ];
     js.enable = true;
     cypress.enable = system == "x86_64-linux";
     playwright.enable = system == "x86_64-linux";
