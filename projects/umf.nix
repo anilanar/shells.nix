@@ -1,6 +1,6 @@
 { pkgs, system, ... }: {
   config = {
-    packages = with pkgs; [ teleport python310 pipenv black ];
+    packages = with pkgs; [ python310 pipenv black ];
     js.enable = true;
     cypress.enable = system == "x86_64-linux";
     playwright.enable = system == "x86_64-linux";
